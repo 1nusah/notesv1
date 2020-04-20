@@ -44,6 +44,7 @@ export default class SignUp extends Component {
               password: text,
             })
           }
+          //git
         />
         <TextInput
           style={styles.textInput}
