@@ -16,8 +16,6 @@ export default class Login extends Component {
     };
   }
   render() {
-    const navigation = this.props.navigation;
-
     return (
       <View style={styles.container}>
         <Text style={styles.login}>Login</Text>
@@ -49,15 +47,14 @@ export default class Login extends Component {
         <View style={{paddingTop: 20}}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Notes')}>
+            // onPress={() => this.props.navigate('My Notes')}
+            onPress={() => alert('yo wassup')}>
             <Text style={styles.buttonText}>Proceed</Text>
           </TouchableOpacity>
         </View>
         <View style={{paddingTop: 10}}>
           <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate('Sign Up');
-            }}>
+            onPress={() => this.props.navigation.navigate('Sign Up')}>
             <Text style={styles.signup}> Don't have an account? Sign Up</Text>
           </TouchableOpacity>
         </View>

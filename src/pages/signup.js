@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import axios from 'axios';
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -16,6 +17,19 @@ export default class SignUp extends Component {
       confirmpassword: '',
     };
   }
+  handleCreateAccount = () => {
+    axios
+      .post('https://us-central1-notes-537b3.cloudfunctions.net/api/register', {
+        email: this.state.email,
+        password: this.state.password,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    this.props.navigation.reset('Notes');
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -61,7 +75,7 @@ export default class SignUp extends Component {
         <View style={{paddingTop: 20}}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Notes')}>
+            onPress={this.handleCreateAccount}>
             <Text style={styles.buttonText}>Proceed</Text>
           </TouchableOpacity>
         </View>

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
 import Splash from './splash';
 import Login from './login';
 export default class Landing extends Component {
@@ -17,11 +16,13 @@ export default class Landing extends Component {
   setTimePassed() {
     this.setState({timePassed: true});
   }
+
   render() {
+    const navigation = this.props.navigation;
     if (!this.state.timePassed) {
       return <Splash />;
     } else {
-      return <Login />;
+      return <Login props={navigation} />;
     }
   }
 }
