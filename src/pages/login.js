@@ -5,7 +5,9 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Login extends Component {
   constructor(props) {
@@ -13,8 +15,16 @@ export default class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      loading: false,
     };
   }
+  storeData = async () => {
+    try {
+      await AsyncStorage.setItem('email', this.state.email.toString());
+    } catch (e) {
+      console.log(e);
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -24,6 +34,7 @@ export default class Login extends Component {
           placeholder="Email"
           placeholderTextColor="#4b0082"
           clearButtonMode="unless-editing"
+          value={this.state.email}
           returnKeyType="next"
           keyboardType="email-address"
           onChangeText={(text) =>
@@ -35,6 +46,7 @@ export default class Login extends Component {
         <TextInput
           style={styles.textInput}
           placeholder="Password"
+          value={this.state.password}
           placeholderTextColor="#4b0082"
           clearButtonMode="unless-editing"
           secureTextEntry={true}
@@ -47,14 +59,23 @@ export default class Login extends Component {
         <View style={{paddingTop: 20}}>
           <TouchableOpacity
             style={styles.button}
-            // onPress={() => this.props.navigate('My Notes')}
-            onPress={() => alert('yo wassup')}>
-            <Text style={styles.buttonText}>Proceed</Text>
+            onPress={() => {
+              this.storeData();
+              this.props.navigation.navigate('Notes');
+            }}>
+            {this.state.loading == true ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Proceed</Text>
+            )}
           </TouchableOpacity>
         </View>
         <View style={{paddingTop: 10}}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Sign Up')}>
+            onPress={() => {
+              this.setState({loading: true});
+              this.props.navigation.navigate('Sign Up');
+            }}>
             <Text style={styles.signup}> Don't have an account? Sign Up</Text>
           </TouchableOpacity>
         </View>

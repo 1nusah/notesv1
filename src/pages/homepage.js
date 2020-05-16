@@ -40,7 +40,12 @@ export default class HomePage extends Component {
         </View>
         <View style={{flexDirection: 'row', paddingTop: 110}}>
           <View style={{paddingLeft: 30, marginRight: '48%'}}>
-            <Icon name="menu" size={50} color="#4b0082" />
+            <Icon
+              name="menu"
+              size={50}
+              color="#4b0082"
+              onPress={() => this.props.navigation.openDrawer()}
+            />
             <Text
               style={{
                 fontSize: 18,
@@ -101,7 +106,7 @@ const styles = StyleSheet.create({
     color: '#ff0bac',
     fontWeight: 'bold',
     textAlign: 'justify',
-    backgroundColor: '#FFC0CB',
+    // backgroundColor: '#FFC0CB',
     borderRadius: 15,
   },
   categoryName: {

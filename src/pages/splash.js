@@ -1,31 +1,29 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Modal} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Modal} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-
-export default class Splash extends Component {
-  render() {
-    return (
-      <Modal>
-        <View style={styles.container}>
-          <View style={styles.logo}>
-            <Animatable.Text
-              animation="bounceInDown"
-              iterationCount={1}
-              style={styles.logoText1}>
-              My
-            </Animatable.Text>
-            <Animatable.Text
-              animation="bounceInUp"
-              iterationCOunt={1}
-              style={styles.logoText2}>
-              Notes
-            </Animatable.Text>
-          </View>
+function Splash({navigation}) {
+  return (
+    <Modal>
+      <View style={styles.container}>
+        <View style={styles.logo}>
+          <Animatable.Text
+            animation="bounceInDown"
+            iterationCount={1}
+            style={styles.logoText1}>
+            My
+          </Animatable.Text>
+          <Animatable.Text
+            animation="bounceInUp"
+            iterationCOunt={1}
+            style={styles.logoText2}>
+            Notes
+          </Animatable.Text>
         </View>
-      </Modal>
-    );
-  }
+      </View>
+    </Modal>
+  );
 }
+export default Splash;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

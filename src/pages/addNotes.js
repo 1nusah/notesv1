@@ -14,8 +14,11 @@ export default class AddNotes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: '',
-      body: '',
+      notes: {
+        category: '',
+        title: '',
+        notes: '',
+      },
     };
   }
   render() {
@@ -26,23 +29,24 @@ export default class AddNotes extends Component {
           placeholder="Category"
           placeholderTextColor="#4b0082"
           enablesReturnKeyAutomatically
-          autoCapitalize
+          autoCapitalize="sentences"
           underlineColorAndroid="#4b0082"
-          onChangeText={(text) => {
-            this.setState({category: text});
-          }}
+          // onChangeText={(text) => {
+          //   this.setState(...{category, : text});
+          // }}
         />
         <ScrollView style={{paddingBottom: 0.1 * height}}>
           <TextInput
             placeholder="Notes"
             placeholderTextColor="#4b0082"
             enablesReturnKeyAutomatically
-            autoCapitalize
+            autoCapitalize="sentences"
             multiline
+            value={this.state.notes.body}
             style={styles.noteItem}
-            onChangeText={(text) => {
-              this.setState({body: text});
-            }}
+            // onChangeText={(text) => {
+            //   this.setState({notes:{...this.state.notes}});
+            // }}
           />
         </ScrollView>
         <TouchableOpacity
