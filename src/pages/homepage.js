@@ -4,6 +4,9 @@ import Icon from 'react-native-vector-icons/Entypo';
 import PlusIcon from 'react-native-vector-icons/AntDesign';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
+function isEmpty(objeCt) {
+  return Object.keys(objeCt).length === 0;
+}
 export default class HomePage extends Component {
   render() {
     return (
