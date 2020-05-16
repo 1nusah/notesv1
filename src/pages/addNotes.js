@@ -11,16 +11,14 @@ import {
 import CheckIcon from 'react-native-vector-icons/Entypo';
 const {width, height} = Dimensions.get('window');
 export default class AddNotes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      notes: {
-        title: '',
-        notes: '',
-      },
-    };
-  }
-
+  state = {
+    title: '',
+    body: '',
+  };
+  //  notes: {
+  //         title: '',
+  //         notes: '',
+  //       },
   //   this.state = {
   //    someProperty: {
   //       flag:true
@@ -37,8 +35,10 @@ export default class AddNotes extends Component {
           enablesReturnKeyAutomatically
           autoCapitalize="sentences"
           underlineColorAndroid="#4b0082"
+          value={this.state.title}
           onChangeText={(text) => {
-            this.setState({notes: {...this.state.notes, title: text}});
+            // this.setState({notes: {...this.state.notes, title: text}});
+            this.setState({title: text});
           }}
         />
         {console.log(this.state)}
@@ -49,10 +49,11 @@ export default class AddNotes extends Component {
             enablesReturnKeyAutomatically
             autoCapitalize="sentences"
             multiline
-            value={this.state.notes.note}
+            value={this.state.body}
             style={styles.noteItem}
             onChangeText={(text) => {
-              this.setState({notes: {...this.state.note, notes: text}});
+              // this.setState({notes: {...this.state.note, notes: text}});
+              this.setState({body: text});
             }}
           />
         </ScrollView>
