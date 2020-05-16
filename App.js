@@ -17,7 +17,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="Home"
+        initialRouteName="Notes"
         drawerContent={({props}) => <DrawerContent {...props} />}>
         <Drawer.Screen
           name="Home"

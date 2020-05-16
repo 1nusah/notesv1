@@ -15,26 +15,33 @@ export default class AddNotes extends Component {
     super(props);
     this.state = {
       notes: {
-        category: '',
         title: '',
         notes: '',
       },
     };
   }
+
+  //   this.state = {
+  //    someProperty: {
+  //       flag:true
+  //    }
+  // }
+  //this.setState({ someProperty: { ...this.state.someProperty, flag: false} });
   render() {
     return (
       <View style={styles.container}>
         <TextInput
           style={styles.categoryName}
-          placeholder="Category"
+          placeholder="Title"
           placeholderTextColor="#4b0082"
           enablesReturnKeyAutomatically
           autoCapitalize="sentences"
           underlineColorAndroid="#4b0082"
-          // onChangeText={(text) => {
-          //   this.setState(...{category, : text});
-          // }}
+          onChangeText={(text) => {
+            this.setState({notes: {...this.state.notes, title: text}});
+          }}
         />
+        {console.log(this.state)}
         <ScrollView style={{paddingBottom: 0.1 * height}}>
           <TextInput
             placeholder="Notes"
@@ -42,11 +49,11 @@ export default class AddNotes extends Component {
             enablesReturnKeyAutomatically
             autoCapitalize="sentences"
             multiline
-            value={this.state.notes.body}
+            value={this.state.notes.note}
             style={styles.noteItem}
-            // onChangeText={(text) => {
-            //   this.setState({notes:{...this.state.notes}});
-            // }}
+            onChangeText={(text) => {
+              this.setState({notes: {...this.state.note, notes: text}});
+            }}
           />
         </ScrollView>
         <TouchableOpacity

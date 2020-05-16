@@ -14,31 +14,21 @@ export default class HomePage extends Component {
         </View>
         <View
           style={{
-            ...styles.categoryContainer,
+            paddingTop: '40%',
             justifyContent: 'center',
+            alignItems: 'center',
           }}>
-          <ScrollView>
-            <View style={styles.categoryContainer}>
-              <View style={styles.categoryItemsContainer}>
-                <Text style={styles.categoryName}>Personal </Text>
-                <Text style={styles.notesNumber}>4</Text>
-              </View>
-              <View style={styles.categoryItemsContainer}>
-                <Text style={styles.pinkCategoryName}>Work </Text>
-                <Text style={styles.pinkCategoryNumber}>6</Text>
-              </View>
-              <View style={styles.categoryItemsContainer}>
-                <Text style={styles.categoryName}>Ideas </Text>
-                <Text style={styles.notesNumber}>2</Text>
-              </View>
-              <View style={styles.categoryItemsContainer}>
-                <Text style={styles.categoryName}>Lists </Text>
-                <Text style={styles.notesNumber}>7</Text>
-              </View>
-            </View>
-          </ScrollView>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontFamily: 'Roboto',
+              fontSize: 25,
+              color: '#4b0082',
+            }}>
+            Tap icon to add first note
+          </Text>
         </View>
-        <View style={{flexDirection: 'row', paddingTop: 110}}>
+        <View style={{flexDirection: 'row', top: '65%', paddingLeft: 20}}>
           <View style={{paddingLeft: 30, marginRight: '48%'}}>
             <Icon
               name="menu"
@@ -46,21 +36,35 @@ export default class HomePage extends Component {
               color="#4b0082"
               onPress={() => this.props.navigation.openDrawer()}
             />
-            <Text
-              style={{
-                fontSize: 18,
-                paddingTop: 0,
-                paddingLeft: 8,
-                color: '#ff0bac',
-              }}>
-              Menu
-            </Text>
+            <Text style={styles.menu}>Menu</Text>
           </View>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Add Note')}>
             <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
           </TouchableOpacity>
         </View>
+        {/* <View>
+          <ScrollView>
+            <View style={styles.categoryItemsContainer}>
+              <Text>Tap icon to add your first note</Text>
+            </View>
+          </ScrollView>
+        </View>
+        <View style={{flexDirection: 'row', position: 'absolute', top: '80%'}}>
+          <View style={{paddingLeft: 30, marginRight: '48%'}}>
+            <Icon
+              name="menu"
+              size={50}
+              color="#4b0082"
+              onPress={() => this.props.navigation.openDrawer()}
+            />
+            <Text style={styles.menu}>Menu</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Add Note')}>
+            <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
+          </TouchableOpacity>
+        </View> */}
       </View>
     );
   }
@@ -92,7 +96,8 @@ const styles = StyleSheet.create({
   categoryItemsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingBottom: 30,
+    alignItems: 'center',
+    flex: 1,
   },
   pinkCategoryName: {
     textAlign: 'justify',
@@ -106,7 +111,6 @@ const styles = StyleSheet.create({
     color: '#ff0bac',
     fontWeight: 'bold',
     textAlign: 'justify',
-    // backgroundColor: '#FFC0CB',
     borderRadius: 15,
   },
   categoryName: {
@@ -121,5 +125,16 @@ const styles = StyleSheet.create({
     color: '#4b0082',
     fontWeight: 'bold',
     textAlign: 'justify',
+  },
+  menu: {
+    fontSize: 18,
+    paddingTop: 0,
+    paddingLeft: 8,
+    color: '#ff0bac',
+  },
+  tapIcon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
 });
