@@ -3,11 +3,34 @@ import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import PlusIcon from 'react-native-vector-icons/AntDesign';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import axios from 'axios';
 
-function isEmpty(objeCt) {
-  return Object.keys(objeCt).length === 0;
-}
 export default class HomePage extends Component {
+  state = {notes: []};
+
+  componentDidMount() {
+    axios
+      .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
+      .then((res) => {
+        console.log(res.data);
+        // this.setState( {state: res.data.})
+        res.data.forEach((item) => {
+          this.setState({
+            notes: [
+              ...this.state.notes,
+              {
+                body: item.body,
+                title: item.title,
+                createdAt: item.createdAt,
+              },
+            ],
+          });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -15,23 +38,32 @@ export default class HomePage extends Component {
           <Text style={styles.logoText1}>My</Text>
           <Text style={styles.logoText2}> Notes</Text>
         </View>
+        {this.state.notes.length < 1 ? (
+          <View
+            style={{
+              paddingTop: '40%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontFamily: 'Roboto',
+                fontSize: 25,
+                color: '#4b0082',
+              }}>
+              Tap icon to add first note
+            </Text>
+          </View>
+        ) : (
+          alert(this.state.notes.length)
+        )}
         <View
           style={{
-            paddingTop: '40%',
-            justifyContent: 'center',
-            alignItems: 'center',
+            flexDirection: 'row',
+            top: '62%',
+            paddingLeft: 20,
           }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontFamily: 'Roboto',
-              fontSize: 25,
-              color: '#4b0082',
-            }}>
-            Tap icon to add first note
-          </Text>
-        </View>
-        <View style={{flexDirection: 'row', top: '65%', paddingLeft: 20}}>
           <View style={{paddingLeft: 30, marginRight: '48%'}}>
             <Icon
               name="menu"
