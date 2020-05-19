@@ -1,31 +1,22 @@
 import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {
-  Avatar,
-  Title,
-  Caption,
-  Paragraph,
-  Drawer,
-  Text,
-  TouchableRipple,
-  Switch,
-} from 'react-native-paper';
+import {Title, Drawer, Text, TouchableRipple, Switch} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import Pic from '../components/assets/images/no-img.png';
-const {width, height} = Dimensions.get('screen');
-const DrawerCOntent = ({props}) => {
+
+const DrawerCOntent = (props) => {
   const [isDarkTheme, setIsDarktheme] = React.useState(false);
   const toggleTheme = () => {
     setIsDarktheme(!isDarkTheme);
   };
+
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View>
-              {/* <Avatar.Image source={{url: }} size={50} /> */}
               <View style={{flexDirection: 'row', padding: 10}}>
                 <Title
                   style={{
@@ -52,7 +43,9 @@ const DrawerCOntent = ({props}) => {
                 <Icon name="bell-outline" color={color} size={size} />
               )}
               label="Reminders"
-              onPress={() => {}}></DrawerItem>
+              onPress={() => {
+                props.navigation.navigate('Reminders');
+              }}></DrawerItem>
             <DrawerItem
               icon={({color, size}) => (
                 <Icon name="bookmark-outline" color={color} size={size} />

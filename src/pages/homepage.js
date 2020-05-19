@@ -78,28 +78,47 @@ export default class HomePage extends Component {
                 Tap icon to add first note
               </Text>
             )}
+            <View
+              style={{
+                flexDirection: 'row',
+                top: '80%',
+                paddingLeft: 20,
+              }}>
+              <View style={{paddingLeft: 30, marginRight: '48%'}}>
+                <Icon
+                  name="menu"
+                  size={50}
+                  color="#4b0082"
+                  onPress={() => this.props.navigation.openDrawer()}
+                />
+                <Text style={styles.menu}>Menu</Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Add Note')}>
+                <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
+              </TouchableOpacity>
+            </View>
           </View>
         ) : (
           <View>
-            <FlatList
-              data={this.state.notes}
-              style={{height: 0.9 * height}}
-              horizontal={false}
-              numColumns={2}
-              keyExtractor={(item) => item.title}
-              renderItem={({item}) => (
-                <TouchableOpacity
-                  style={{opacity: 0.7}}
-                  onPress={() => {
-                    this.setState({modalReveal: !this.state.modalReveal});
-                  }}>
-                  <>
+            <View>
+              <FlatList
+                data={this.state.notes}
+                style={{height: 0.7 * height}}
+                horizontal={false}
+                numColumns={2}
+                keyExtractor={(item) => item.title}
+                renderItem={({item}) => (
+                  <TouchableOpacity
+                    style={{opacity: 0.7}}
+                    onPress={() => {
+                      this.setState({modalReveal: !this.state.modalReveal});
+                    }}>
                     <View>
                       <View
                         style={{
                           height: 100,
                           width: width / 2,
-                          paddingHorizontal: 2,
                         }}>
                         <Text
                           style={{
@@ -125,29 +144,27 @@ export default class HomePage extends Component {
                         </Text>
                       </View>
                     </View>
-                  </>
+                  </TouchableOpacity>
+                )}
+              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}>
+                <View style={{paddingLeft: 30, marginRight: '48%'}}>
+                  <Icon
+                    name="menu"
+                    size={50}
+                    color="#4b0082"
+                    onPress={() => this.props.navigation.openDrawer()}
+                  />
+                  <Text style={styles.menu}>Menu</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Add Note')}>
+                  <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
                 </TouchableOpacity>
-              )}
-            />
-            <View
-              style={{
-                flexDirection: 'row',
-                top: '60%',
-                paddingLeft: 20,
-              }}>
-              <View style={{paddingLeft: 30, marginRight: '48%'}}>
-                <Icon
-                  name="menu"
-                  size={50}
-                  color="#4b0082"
-                  onPress={() => this.props.navigation.openDrawer()}
-                />
-                <Text style={styles.menu}>Menu</Text>
               </View>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Add Note')}>
-                <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
-              </TouchableOpacity>
             </View>
           </View>
         )}

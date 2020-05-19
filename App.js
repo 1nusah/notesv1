@@ -10,6 +10,7 @@ import MyNotes from './src/pages/mynotes';
 import Login from './src/pages/login';
 import AddNotes from './src/pages/addNotes';
 import DrawerContent from './src/pages/drawerContent';
+import Reminders from './src/pages/reminders';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -44,6 +45,7 @@ const App = () => {
           options={{headerShown: false}}
         />
         <Drawer.Screen name="Add Note" component={AddNotes} />
+        <Drawer.Screen name="Reminders" component={Reminders} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
