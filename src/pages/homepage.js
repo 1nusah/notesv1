@@ -1,36 +1,48 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import PlusIcon from 'react-native-vector-icons/AntDesign';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from 'axios';
 
 export default class HomePage extends Component {
-  state = {notes: []};
+  state = {notes: [], isLoading: true};
 
-  componentDidMount() {
-    axios
-      .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
-      .then((res) => {
-        console.log(res.data);
-        // this.setState( {state: res.data.})
-        res.data.forEach((item) => {
-          this.setState({
-            notes: [
-              ...this.state.notes,
-              {
-                body: item.body,
-                title: item.title,
-                createdAt: item.createdAt,
-              },
-            ],
-          });
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  // componentDidMount() {
+  //   axios
+  //     .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       // this.setState( {state: res.data.})
+  //       res.data.forEach((item) => {
+  //         this.setState({
+  //           notes: [
+  //             ...this.state.notes,
+  //             {
+  //               body: item.body,
+  //               title: item.title,
+  //               createdAt: item.createdAt,
+  //             },
+  //           ],
+  //         });
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+  hideLoading = () => {
+    setTimeout(() => {
+      this.setState({isLoading: false});
+    }, 5000);
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -45,15 +57,19 @@ export default class HomePage extends Component {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text
-              style={{
-                textAlign: 'center',
-                fontFamily: 'Roboto',
-                fontSize: 25,
-                color: '#4b0082',
-              }}>
-              Tap icon to add first note
-            </Text>
+            {this.state.isLoading && <ActivityIndicator />}
+            {this.hideLoading()}
+            {!this.state.isLoading && (
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontFamily: 'Roboto',
+                  fontSize: 25,
+                  color: '#4b0082',
+                }}>
+                Tap icon to add first note
+              </Text>
+            )}
           </View>
         ) : (
           alert(this.state.notes.length)
@@ -61,7 +77,7 @@ export default class HomePage extends Component {
         <View
           style={{
             flexDirection: 'row',
-            top: '62%',
+            top: '60%',
             paddingLeft: 20,
           }}>
           <View style={{paddingLeft: 30, marginRight: '48%'}}>
