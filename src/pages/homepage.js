@@ -5,10 +5,11 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  TouchableHighlight,
+  TextInput,
   ActivityIndicator,
   FlatList,
   Dimensions,
+  Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import PlusIcon from 'react-native-vector-icons/AntDesign';
@@ -19,14 +20,13 @@ export default class HomePage extends Component {
   state = {
     notes: [],
     isLoading: true,
+    modalReveal: false,
   };
 
   componentDidMount() {
     axios
       .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
       .then((res) => {
-        console.log(res.data);
-        // this.setState( {state: res.data.})
         res.data.forEach((item) => {
           this.setState({
             notes: [
@@ -35,6 +35,7 @@ export default class HomePage extends Component {
                 body: item.body,
                 title: item.title,
                 createdAt: item.createdAt,
+                id: item.body.noteId,
               },
             ],
           });
@@ -79,70 +80,77 @@ export default class HomePage extends Component {
             )}
           </View>
         ) : (
-          <>
+          <View>
             <FlatList
               data={this.state.notes}
-              style={{paddingTop: 0}}
+              style={{height: 0.9 * height}}
               horizontal={false}
               numColumns={2}
+              keyExtractor={(item) => item.title}
               renderItem={({item}) => (
-                <TouchableOpacity key={item.title}>
-                  <View>
-                    <View
-                    // style={{
-                    //   width: width / 2,
-                    // }}
-                    >
+                <TouchableOpacity
+                  style={{opacity: 0.7}}
+                  onPress={() => {
+                    this.setState({modalReveal: !this.state.modalReveal});
+                  }}>
+                  <>
+                    <View>
                       <View
                         style={{
                           height: 100,
                           width: width / 2,
                           paddingHorizontal: 2,
-                          // overflow: 'hidden',
                         }}>
                         <Text
                           style={{
-                            fontSize: 30,
+                            fontSize: 25,
                             textTransform: 'capitalize',
                             borderBottomWidth: 0.5,
                             borderBottomColor: '#f2e9e9',
                             borderBottomEndRadius: 5,
+                            fontFamily: 'Roboto',
+                            color: '#ff0bac',
+                            shadowOpacity: 0.7,
                           }}>
                           {item.title}
                         </Text>
 
-                        <Text style={{fontSize: 20}}>
+                        <Text
+                          style={{
+                            fontSize: 20,
+                            fontFamily: 'Roboto',
+                            color: '#4b0082',
+                          }}>
                           {item.body.substring(0, 30)}
                         </Text>
                       </View>
                     </View>
-                  </View>
+                  </>
                 </TouchableOpacity>
               )}
             />
-          </>
-        )}
-
-        <View
-          style={{
-            flexDirection: 'row',
-            top: '60%',
-            paddingLeft: 20,
-          }}>
-          <View style={{paddingLeft: 30, marginRight: '48%'}}>
-            <Icon
-              name="menu"
-              size={50}
-              color="#4b0082"
-              onPress={() => this.props.navigation.openDrawer()}
-            />
-            <Text style={styles.menu}>Menu</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                top: '90%',
+                paddingLeft: 20,
+              }}>
+              <View style={{paddingLeft: 30, marginRight: '48%'}}>
+                <Icon
+                  name="menu"
+                  size={50}
+                  color="#4b0082"
+                  onPress={() => this.props.navigation.openDrawer()}
+                />
+                <Text style={styles.menu}>Menu</Text>
+              </View>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Add Note')}>
+                <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
+              </TouchableOpacity>
+            </View>
           </View>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Add Note')}>
-            <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
-          </TouchableOpacity>
-        </View>
+        )}
       </View>
     );
   }

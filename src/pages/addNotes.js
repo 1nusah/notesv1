@@ -26,6 +26,7 @@ export default class AddNotes extends Component {
   //    }
   // }
   //this.setState({ someProperty: { ...this.state.someProperty, flag: false} });
+
   handleAddNote = () => {
     axios
       .post('https://us-central1-notes-537b3.cloudfunctions.net/api/newNote', {
@@ -50,7 +51,6 @@ export default class AddNotes extends Component {
           autoCapitalize="sentences"
           underlineColorAndroid="#4b0082"
           textAlignVertical="center"
-          value={this.state.title}
           onChangeText={(text) => {
             // this.setState({notes: {...this.state.notes, title: text}});
             this.setState({title: text});
@@ -63,7 +63,6 @@ export default class AddNotes extends Component {
             enablesReturnKeyAutomatically
             autoCapitalize="sentences"
             multiline
-            value={this.state.body}
             style={styles.noteItem}
             onChangeText={(text) => {
               // this.setState({notes: {...this.state.note, notes: text}});
