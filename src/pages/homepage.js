@@ -132,7 +132,7 @@ export default class HomePage extends Component {
             <View
               style={{
                 flexDirection: 'row',
-                top: '90%',
+                top: '60%',
                 paddingLeft: 20,
               }}>
               <View style={{paddingLeft: 30, marginRight: '48%'}}>
