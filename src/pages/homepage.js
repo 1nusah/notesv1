@@ -4,39 +4,46 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
+  TouchableHighlight,
   ActivityIndicator,
+  FlatList,
+  Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import PlusIcon from 'react-native-vector-icons/AntDesign';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from 'axios';
+const {width, height} = Dimensions.get('window');
 
 export default class HomePage extends Component {
-  state = {notes: [], isLoading: true};
+  state = {
+    notes: [],
+    isLoading: true,
+  };
 
-  // componentDidMount() {
-  //   axios
-  //     .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       // this.setState( {state: res.data.})
-  //       res.data.forEach((item) => {
-  //         this.setState({
-  //           notes: [
-  //             ...this.state.notes,
-  //             {
-  //               body: item.body,
-  //               title: item.title,
-  //               createdAt: item.createdAt,
-  //             },
-  //           ],
-  //         });
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
+  componentDidMount() {
+    axios
+      .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
+      .then((res) => {
+        console.log(res.data);
+        // this.setState( {state: res.data.})
+        res.data.forEach((item) => {
+          this.setState({
+            notes: [
+              ...this.state.notes,
+              {
+                body: item.body,
+                title: item.title,
+                createdAt: item.createdAt,
+              },
+            ],
+          });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   hideLoading = () => {
     setTimeout(() => {
       this.setState({isLoading: false});
@@ -72,8 +79,50 @@ export default class HomePage extends Component {
             )}
           </View>
         ) : (
-          alert(this.state.notes.length)
+          <>
+            <FlatList
+              data={this.state.notes}
+              style={{paddingTop: 0}}
+              horizontal={false}
+              numColumns={2}
+              renderItem={({item}) => (
+                <TouchableOpacity key={item.title}>
+                  <View>
+                    <View
+                    // style={{
+                    //   width: width / 2,
+                    // }}
+                    >
+                      <View
+                        style={{
+                          height: 100,
+                          width: width / 2,
+                          paddingHorizontal: 2,
+                          // overflow: 'hidden',
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 30,
+                            textTransform: 'capitalize',
+                            borderBottomWidth: 0.5,
+                            borderBottomColor: '#f2e9e9',
+                            borderBottomEndRadius: 5,
+                          }}>
+                          {item.title}
+                        </Text>
+
+                        <Text style={{fontSize: 20}}>
+                          {item.body.substring(0, 30)}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+          </>
         )}
+
         <View
           style={{
             flexDirection: 'row',
@@ -94,28 +143,6 @@ export default class HomePage extends Component {
             <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
           </TouchableOpacity>
         </View>
-        {/* <View>
-          <ScrollView>
-            <View style={styles.categoryItemsContainer}>
-              <Text>Tap icon to add your first note</Text>
-            </View>
-          </ScrollView>
-        </View>
-        <View style={{flexDirection: 'row', position: 'absolute', top: '80%'}}>
-          <View style={{paddingLeft: 30, marginRight: '48%'}}>
-            <Icon
-              name="menu"
-              size={50}
-              color="#4b0082"
-              onPress={() => this.props.navigation.openDrawer()}
-            />
-            <Text style={styles.menu}>Menu</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Add Note')}>
-            <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
-          </TouchableOpacity>
-        </View> */}
       </View>
     );
   }
@@ -128,16 +155,16 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingBottom: 100,
+    paddingBottom: 50,
   },
   logoText1: {
-    fontSize: 70,
+    fontSize: 40,
     color: '#ff0bac',
     fontWeight: 'bold',
     marginRight: 10,
   },
   logoText2: {
-    fontSize: 70,
+    fontSize: 40,
     color: '#4b0082',
     fontWeight: 'bold',
   },

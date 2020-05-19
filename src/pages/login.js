@@ -15,15 +15,13 @@ export default class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      loading: false,
+      isLoading: false,
     };
   }
-  storeData = async () => {
-    try {
-      await AsyncStorage.setItem('email', this.state.email.toString());
-    } catch (e) {
-      console.log(e);
-    }
+  hideLoading = () => {
+    setTimeout(() => {
+      this.setState({isLoading: false});
+    }, 5000);
   };
   render() {
     return (
@@ -60,7 +58,6 @@ export default class Login extends Component {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              this.storeData();
               this.props.navigation.navigate('Notes');
             }}>
             {this.state.loading == true ? (
@@ -70,6 +67,8 @@ export default class Login extends Component {
             )}
           </TouchableOpacity>
         </View>
+
+        {this.hideLoading()}
         <View style={{paddingTop: 10}}>
           <TouchableOpacity
             onPress={() => {
