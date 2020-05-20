@@ -3,20 +3,19 @@ import {View, StyleSheet, Dimensions} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Title, Drawer, Text, TouchableRipple, Switch} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import Pic from '../components/assets/images/no-img.png';
-
-const DrawerCOntent = (props) => {
+export default function DrawerContent(props) {
   const [isDarkTheme, setIsDarktheme] = React.useState(false);
   const toggleTheme = () => {
     setIsDarktheme(!isDarkTheme);
   };
 
   return (
-    <View style={{flex: 1}}>
-      <DrawerContentScrollView {...props}>
+    <View style={{flex: 1}} {...props}>
+      <DrawerContentScrollView>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View>
+              {/* <Avatar.Image source={{url: }} size={50} /> */}
               <View style={{flexDirection: 'row', padding: 10}}>
                 <Title
                   style={{
@@ -37,7 +36,9 @@ const DrawerCOntent = (props) => {
                 <Icon name="home-outline" color={color} size={size} />
               )}
               label="Home"
-              onPress={() => {}}></DrawerItem>
+              onPress={() => {
+                props.navigation.navigate('Notes');
+              }}></DrawerItem>
             <DrawerItem
               icon={({color, size}) => (
                 <Icon name="bell-outline" color={color} size={size} />
@@ -51,25 +52,33 @@ const DrawerCOntent = (props) => {
                 <Icon name="bookmark-outline" color={color} size={size} />
               )}
               label="Notes"
-              onPress={() => {}}></DrawerItem>
+              onPress={() => {
+                props.navigation.navigate('My Notes');
+              }}></DrawerItem>
             <DrawerItem
               icon={({color, size}) => (
                 <Icon name="plus-outline" color={color} size={size} />
               )}
               label="Add New Label"
-              onPress={() => {}}></DrawerItem>
+              onPress={() => {
+                props.navigation.navigate('Label');
+              }}></DrawerItem>
             <DrawerItem
               icon={({color, size}) => (
                 <Icon name="settings-outline" color={color} size={size} />
               )}
               label="Settings"
-              onPress={() => {}}></DrawerItem>
+              onPress={() => {
+                props.navigation.navigate('Settings');
+              }}></DrawerItem>
             <DrawerItem
               icon={({color, size}) => (
                 <Icon name="account-check-outline" color={color} size={size} />
               )}
               label="Support"
-              onPress={() => {}}></DrawerItem>
+              onPress={() => {
+                props.navigation.navigate('Support');
+              }}></DrawerItem>
           </Drawer.Section>
           <Drawer.Section title="Preferences">
             <TouchableRipple
@@ -96,7 +105,7 @@ const DrawerCOntent = (props) => {
       </Drawer.Section>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   drawerContent: {
@@ -143,5 +152,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
-
-export default DrawerCOntent;

@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import {Input} from 'native-base';
 import CheckIcon from 'react-native-vector-icons/Entypo';
 import axios from 'axios';
 const {width, height} = Dimensions.get('window');
@@ -52,33 +53,29 @@ export default class AddNotes extends Component {
           underlineColorAndroid="#4b0082"
           textAlignVertical="center"
           onChangeText={(text) => {
-            // this.setState({notes: {...this.state.notes, title: text}});
             this.setState({title: text});
           }}
         />
-        <ScrollView style={{paddingBottom: 0.1 * height}}>
-          <TextInput
-            placeholder="Notes"
-            placeholderTextColor="#4b0082"
-            enablesReturnKeyAutomatically
-            autoCapitalize="sentences"
-            multiline
-            style={styles.noteItem}
-            onChangeText={(text) => {
-              // this.setState({notes: {...this.state.note, notes: text}});
-              this.setState({body: text});
-            }}
-          />
-        </ScrollView>
+
+        <TextInput
+          placeholder="Notes"
+          placeholderTextColor="#4b0082"
+          autoCapitalize="sentences"
+          style={styles.noteItem}
+          multiline={true}
+          onChangeText={(text) => {
+            this.setState({body: text});
+          }}
+        />
+
         <TouchableOpacity onPress={this.handleAddNote}>
           <CheckIcon
             name="check"
             size={50}
             color="#ff0bac"
             style={{
-              paddingTop: 0.48 * height,
-              paddingLeft: 0.8 * width,
-              paddingBottom: 30,
+              paddingTop: 0.1 * height,
+              paddingLeft: 0.7 * width,
             }}
           />
         </TouchableOpacity>
@@ -91,8 +88,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: height,
-    paddingVertical: 30,
-    paddingHorizontal: 5,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 0,
+    paddingBottom: 0,
+    backgroundColor: 'azure',
   },
   categoryName: {
     color: '#4b0082',
@@ -102,5 +102,7 @@ const styles = StyleSheet.create({
   noteItem: {
     fontSize: 25,
     color: '#4b0082',
+    height: 0.5 * height,
+    textAlignVertical: 'top',
   },
 });

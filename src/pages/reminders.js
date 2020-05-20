@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
-import {Title} from 'native-base';
-
-export class Reminders extends Component {
+import {View, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+class Reminders extends Component {
   render() {
     return (
-      <View>
-        <Title> Your Reminders</Title>
+      <View style={{flex: 1}}>
+        <Icon name="bell-outline" color="#4b0082" />
       </View>
     );
   }

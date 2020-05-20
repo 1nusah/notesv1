@@ -110,7 +110,7 @@ export default class HomePage extends Component {
                 keyExtractor={(item) => item.title}
                 renderItem={({item}) => (
                   <TouchableOpacity
-                    style={{opacity: 0.7}}
+                    // style={{opacity: 0.7}}
                     onPress={() => {
                       this.setState({modalReveal: !this.state.modalReveal});
                     }}>
@@ -124,12 +124,9 @@ export default class HomePage extends Component {
                           style={{
                             fontSize: 25,
                             textTransform: 'capitalize',
-                            borderBottomWidth: 0.5,
                             borderBottomColor: '#f2e9e9',
                             borderBottomEndRadius: 5,
-                            fontFamily: 'Roboto',
                             color: '#ff0bac',
-                            shadowOpacity: 0.7,
                           }}>
                           {item.title}
                         </Text>
@@ -140,7 +137,7 @@ export default class HomePage extends Component {
                             fontFamily: 'Roboto',
                             color: '#4b0082',
                           }}>
-                          {item.body.substring(0, 30)}
+                          {item.body.substring(0, 25)}
                         </Text>
                       </View>
                     </View>
