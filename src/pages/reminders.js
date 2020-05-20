@@ -5,7 +5,18 @@ class Reminders extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <Icon name="bell-outline" color="#4b0082" />
+        <View
+          style={{
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+            flex: 1,
+          }}>
+          <Icon name="bell-outline" color="#ff0bac" size={100} />
+          <Text style={{fontSize: 30, color: '#4b0082'}}>
+            You have no reminders
+          </Text>
+        </View>
       </View>
     );
   }

@@ -12,7 +12,7 @@ import DrawerContent from './src/pages/drawerContent';
 import Reminders from './src/pages/reminders';
 import Settings from './src/pages/settings';
 import Support from './src/pages/support';
-import {Label} from 'native-base';
+import Label from './src/pages/label';
 const Drawer = createDrawerNavigator();
 
 const App = () => {
