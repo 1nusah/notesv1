@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
-import Text from 'native-base';
-
+import {View, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 class Settings extends Component {
   render() {
     return (
-      <View>
-        <Text> Settings Page</Text>
+      <View style={{flex: 1}}>
+        <Text>Settings Page</Text>
       </View>
     );
   }

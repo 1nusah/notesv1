@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
-import Text from 'native-base';
+import {View, Text} from 'react-native';
 
 class Support extends Component {
   render() {
     return (
-      <View>
-        <Text> textInComponent </Text>
+      <View style={{flex: 1}}>
+        <Text> Support Page </Text>
       </View>
     );
   }
