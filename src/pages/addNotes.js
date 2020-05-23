@@ -8,7 +8,6 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {Input} from 'native-base';
 import CheckIcon from 'react-native-vector-icons/Entypo';
 import axios from 'axios';
 const {width, height} = Dimensions.get('window');

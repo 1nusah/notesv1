@@ -14,6 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/Entypo';
 import PlusIcon from 'react-native-vector-icons/AntDesign';
 import axios from 'axios';
+import {Caption} from 'react-native-paper';
 const {width, height} = Dimensions.get('window');
 
 export default class HomePage extends Component {
@@ -22,6 +23,7 @@ export default class HomePage extends Component {
     isLoading: true,
     modalReveal: false,
     selectedItem: {},
+    edit: false,
   };
 
   componentDidMount() {
@@ -50,6 +52,18 @@ export default class HomePage extends Component {
     setTimeout(() => {
       this.setState({isLoading: false});
     }, 5000);
+  };
+  handleAddNote = () => {
+    axios
+      .post('https://us-central1-notes-537b3.cloudfunctions.net/api/newNote', {
+        title: this.state.title,
+        body: this.state.body,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+    this.props.navigation.goBack();
   };
 
   render() {
@@ -150,33 +164,88 @@ export default class HomePage extends Component {
                   </View>
                 )}
               />
-              {console.log(this.state.selectedItem)}
-              <View keyboardShouldPersistTaps="always" style={{flex: 1}}>
+              {this.state.modalReveal && (
                 <Modal
-                // onRequestClose={() => {
-                //   this.setState({modalReveal: false});
-                // }}
-                >
-                  <View style={{flex: 1}}>
+                  onRequestClose={() => {
+                    this.setState({modalReveal: false});
+                    if (this.state.edit !== false) {
+                      this.setState({edit: false});
+                    }
+                  }}>
+                  <View style={styles.inputContainer}>
+                    <View style={{flexDirection: 'row'}}>
+                      <TextInput
+                        placeholder={this.state.selectedItem.title}
+                        defaultValue={this.state.selectedItem.title}
+                        autoCapitalize="sentences"
+                        multiline
+                        editable={this.state.edit}
+                        clearButtonMode="unless-editing"
+                        placeholderTextColor="#4b0082"
+                        underlineColorAndroid="#4b0082"
+                        textAlignVertical="center"
+                        onChangeText={(text) => {
+                          this.setState({
+                            ...this.state.selectedItem,
+                            title: text,
+                          });
+                        }}
+                        style={{
+                          height: 0.1 * height,
+                          width: 0.9 * width,
+                          fontSize: 30,
+                          color: '#ff0bac',
+                        }}
+                      />
+                      <Caption
+                        style={{
+                          fontSize: 15,
+                          textAlign: 'center',
+                          paddingTop: 30,
+                        }}
+                        onPress={() => {
+                          this.setState({edit: true});
+                        }}>
+                        Edit
+                      </Caption>
+                    </View>
+                    {console.log(this.state.edit)}
+
                     <TextInput
-                      placeholder={this.state.selectedItem.title}
+                      clearButtonMode="unless-editing"
+                      placeholder={this.state.selectedItem.body}
+                      multiline
+                      editable={this.state.edit}
+                      placeholderTextColor="#4b0082"
+                      defaultValue={this.state.selectedItem.body}
                       onChangeText={(text) => {
-                        console.log(text);
+                        this.setState({
+                          ...this.state.selectedItem,
+                          body: text,
+                        });
                       }}
                       style={{
+                        height: 0.5 * height,
+                        fontSize: 25,
                         color: '#4b0082',
-                        height: 0.1 * height,
-                        fontSize: 30,
-                        backgroundColor: '#ceceec',
+                        textAlignVertical: 'top',
                       }}
                     />
+                    {this.state.edit && (
+                      <TouchableOpacity onPress={this.handleAddNote}>
+                        <Icon
+                          name="check"
+                          size={50}
+                          color="#ff0bac"
+                          style={{
+                            paddingLeft: 0.7 * width,
+                          }}
+                        />
+                      </TouchableOpacity>
+                    )}
                   </View>
-                  {/* 
-                    <Text>{this.state.selectedItem.title}</Text>
-                    <Text>{this.state.selectedItem.body}</Text> */}
                 </Modal>
-              </View>
-
+              )}
               <View
                 style={{
                   flexDirection: 'row',
@@ -223,42 +292,7 @@ const styles = StyleSheet.create({
     color: '#4b0082',
     fontWeight: 'bold',
   },
-  categoryContainer: {
-    paddingTop: 0,
-  },
-  categoryItemsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
-  pinkCategoryName: {
-    textAlign: 'justify',
-    marginRight: '25%',
-    fontSize: 45,
-    color: '#ff0bac',
-    fontWeight: 'bold',
-  },
-  pinkCategoryNumber: {
-    fontSize: 45,
-    color: '#ff0bac',
-    fontWeight: 'bold',
-    textAlign: 'justify',
-    borderRadius: 15,
-  },
-  categoryName: {
-    marginRight: '25%',
-    fontSize: 45,
-    color: '#4b0082',
-    fontWeight: 'bold',
-    textAlign: 'justify',
-  },
-  notesNumber: {
-    fontSize: 45,
-    color: '#4b0082',
-    fontWeight: 'bold',
-    textAlign: 'justify',
-  },
+
   menu: {
     fontSize: 18,
     paddingTop: 0,
@@ -269,5 +303,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
+  },
+  inputContainer: {
+    height: height,
+    paddingRight: 30,
+    paddingTop: 0,
+    paddingBottom: 0,
+    backgroundColor: 'azure',
   },
 });
