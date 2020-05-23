@@ -21,6 +21,7 @@ export default class HomePage extends Component {
     notes: [],
     isLoading: true,
     modalReveal: false,
+    selectedItem: {},
   };
 
   componentDidMount() {
@@ -53,7 +54,7 @@ export default class HomePage extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} keyboardShouldPersistTaps="always">
         <View style={styles.header}>
           <Text style={styles.logoText1}>My</Text>
           <Text style={styles.logoText2}> Notes</Text>
@@ -93,8 +94,7 @@ export default class HomePage extends Component {
                 />
                 <Text style={styles.menu}>Menu</Text>
               </View>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Add Note')}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                 <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
               </TouchableOpacity>
             </View>
@@ -108,13 +108,19 @@ export default class HomePage extends Component {
                 horizontal={false}
                 numColumns={2}
                 keyExtractor={(item) => item.title}
+                keyboardShouldPersistTaps="always"
                 renderItem={({item}) => (
-                  <TouchableOpacity
-                    // style={{opacity: 0.7}}
-                    onPress={() => {
-                      this.setState({modalReveal: !this.state.modalReveal});
-                    }}>
-                    <View>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({
+                          modalReveal: !this.state.modalReveal,
+                          selectedItem: {
+                            title: item.title,
+                            body: item.body,
+                          },
+                        });
+                      }}>
                       <View
                         style={{
                           height: 100,
@@ -140,10 +146,37 @@ export default class HomePage extends Component {
                           {item.body.substring(0, 25)}
                         </Text>
                       </View>
-                    </View>
-                  </TouchableOpacity>
+                    </TouchableOpacity>
+                  </View>
                 )}
               />
+              {console.log(this.state.selectedItem)}
+              <View keyboardShouldPersistTaps="always" style={{flex: 1}}>
+                <Modal
+                // onRequestClose={() => {
+                //   this.setState({modalReveal: false});
+                // }}
+                >
+                  <View style={{flex: 1}}>
+                    <TextInput
+                      placeholder={this.state.selectedItem.title}
+                      onChangeText={(text) => {
+                        console.log(text);
+                      }}
+                      style={{
+                        color: '#4b0082',
+                        height: 0.1 * height,
+                        fontSize: 30,
+                        backgroundColor: '#ceceec',
+                      }}
+                    />
+                  </View>
+                  {/* 
+                    <Text>{this.state.selectedItem.title}</Text>
+                    <Text>{this.state.selectedItem.body}</Text> */}
+                </Modal>
+              </View>
+
               <View
                 style={{
                   flexDirection: 'row',
