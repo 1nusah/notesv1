@@ -12,12 +12,13 @@ import {AuthContext} from '../../components/context/context';
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingIndicator, setIsLoading] = useState(false);
   const {signIn} = useContext(AuthContext);
-  const handleLogin = (username, password) => {
-    signIn(username, password);
-    // console.log({username, password});
-  };
+  function loginHandle(email, password) {
+    signIn(email, password);
+    // setIsLoading(true);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.login}>Login</Text>
@@ -43,8 +44,8 @@ const Login = ({navigation}) => {
       <View style={{paddingTop: 20}}>
         <TouchableOpacity
           style={styles.button}
-          onPress={handleLogin(email, password)}>
-          {isLoading == true ? (
+          onPress={loginHandle(email, password)}>
+          {isLoadingIndicator == 'hello' ? (
             <ActivityIndicator color="#fff" />
           ) : (
             <Text style={styles.buttonText}>Proceed</Text>

@@ -15,16 +15,17 @@ import Support from './src/pages/screens/support';
 import Label from './src/pages/screens/label';
 import RegisterStack from './src/pages/routesComponents/registerStack';
 import {AuthContext} from './src/components/context/context';
+import AsyncStorage from '@react-native-community/async-storage';
 import {View} from 'react-native';
 import {StatusBar} from 'react-native';
 const Drawer = createDrawerNavigator();
 
 const App = () => {
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [userToken, setUserToken] = useState(null);
-  const initialLoginState = {
+  // const [isLoading, setIsLoading] = React.useState(true);
+  // const [userToken, setUserToken] = React.useState(null);
+  initialLoginState = {
     isLoading: true,
-    userName: null,
+    email: null,
     userToken: null,
   };
   const loginReducer = (prevState, action) => {
@@ -35,59 +36,91 @@ const App = () => {
           userToken: action.token,
           isLoading: false,
         };
-
       case 'LOGIN':
         return {
           ...prevState,
-          userName: action.id,
+          email: action.id,
           userToken: action.token,
           isLoading: false,
         };
-
+      case 'SIGNUP': {
+        return {
+          ...prevState,
+          isLoading: false,
+          userToken: action.token,
+          email: action.id,
+        };
+      }
       case 'LOGOUT':
         return {
           ...prevState,
           isLoading: false,
-          userName: null,
+          email: null,
           userToken: null,
-        };
-
-      case 'REGISTER':
-        return {
-          ...prevState,
-          isLoading: false,
-          userName: action.id,
-          userToken: action.token,
         };
     }
   };
+
   const [loginState, dispatch] = React.useReducer(
     loginReducer,
     initialLoginState,
   );
-  const authContext = React.useMemo(() => ({
-    signIn: (userName, password) => {
-      let userToken;
-      userName = null;
-      if (userName == 'user' && password == 'pass') {
-        userToken = 'asdfgh';
-      }
-      dispatch({type: 'LOGIN', id: userName, token: userToken});
-    },
-    signOut: () => {
-      dispatch({type: 'LOGOUT'});
-    },
-    signUp: () => {
-      setUserToken('said');
-      setIsLoading(false);
-    },
-  }));
-
+  const authContext = React.useMemo(
+    () => ({
+      signIn: async (email, password) => {
+        // setUserToken('jdskjdkjkjd');
+        // setIsLoading(false);
+        let userToken;
+        userToken = null;
+        if (email == 'user@gmail.com' && password == '1234567') {
+          userToken = 'jnkjfkjkjlfkl';
+          try {
+            await AsyncStorage.setItem('userToken', userToken);
+          } catch (e) {
+            console.log(e);
+          }
+        }
+        dispatch({type: 'LOGIN', id: email, token: userToken});
+        {
+          console.log('user token is ' + userToken);
+          console.log('user email is ' + email);
+          console.log('user password is ' + password);
+        }
+      },
+      signOut: async () => {
+        // setUserToken(null);
+        // setIsLoading(false);
+        try {
+          await AsyncStorage.removeItem('userToken');
+        } catch (e) {
+          console.log(e);
+        }
+        dispatch({type: 'LOGOUT'});
+      },
+      signUp: () => {
+        setUserToken('said');
+        setIsLoading(false);
+      },
+    }),
+    [],
+  );
+  {
+    console.log(loginState);
+  }
   useEffect(() => {
-    setTimeout(() => {
-      // setIsLoading(false);
-      dispatch({type: 'REGISTER', token: 'asdfgh'});
-    }, 3000);
+    setTimeout(async () => {
+      let userToken;
+      userToken = null;
+      try {
+        userToken = await AsyncStorage.getItem('userToken', userToken);
+      } catch (e) {
+        console.log(e);
+      }
+      dispatch({
+        type: 'RETRIEVE_TOKEN',
+        token: userToken,
+      });
+    }, 1000);
   }, []);
   if (loginState.isLoading) {
     return (
@@ -106,16 +139,6 @@ const App = () => {
         ) : (
           <Drawer.Navigator
             drawerContent={(props) => <DrawerContent {...props} />}>
-            {/* <Drawer.Screen
-              name="Login"
-              component={Login}
-              options={{headerShown: false}}
-            />
-            <Drawer.Screen
-              name="Sign Up"
-              component={SignUp}
-              options={{headerShown: false}}
-            /> */}
             <Drawer.Screen
               name="Notes"
               component={HomePage}
@@ -139,3 +162,47 @@ const App = () => {
 };
 
 export default App;
+
+// const initialLoginState = {
+//   isLoading: true,
+//   email: null,
+//   userToken: null,
+// };
+// const loginReducer = (prevState, action) => {
+//   switch (action.type) {
+//     case 'RETRIEVE_TOKEN':
+//       return {
+//         ...prevState,
+//         userToken: action.token,
+//         isLoading: false,
+//       };
+
+//     case 'LOGIN':
+//       return {
+//         ...prevState,
+//         email: action.id,
+//         userToken: action.token,
+//         isLoading: false,
+//       };
+
+//     case 'LOGOUT':
+//       return {
+//         // ...prevState,
+//         isLoading: false,
+//         email: null,
+//         userToken: null,
+//       };
+
+//     case 'REGISTER':
+//       return {
+//         ...prevState,
+//         isLoading: false,
+//         email: action.id,
+//         userToken: action.token,
+//       };
+//   }
+// };
+// const [loginState, dispatch] = React.useReducer(
+//   loginReducer,
+//   initialLoginState,
+// );

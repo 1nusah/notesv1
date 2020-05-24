@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Title, Drawer, Text, TouchableRipple, Switch} from 'react-native-paper';
@@ -6,22 +6,24 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AuthContext} from '../../components/context/context';
 
 export default function DrawerContent(props) {
+  const {signOut} = React.useContext(AuthContext);
+
   const [isDarkTheme, setIsDarktheme] = React.useState(false);
   const toggleTheme = () => {
     setIsDarktheme(!isDarkTheme);
   };
 
-  const {signOut} = useContext(AuthContext);
   const handleSignOut = () => {
     signOut();
-    console.log('done');
   };
+
   return (
     <View style={{flex: 1}} {...props}>
       <DrawerContentScrollView>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View>
+              {/* <Avatar.Image source={{url: }} size={50} /> */}
               <View style={{flexDirection: 'row', padding: 10}}>
                 <Title
                   style={{

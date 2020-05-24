@@ -26,28 +26,6 @@ export default class HomePage extends Component {
     edit: false,
   };
 
-  // componentDidMount() {
-  //   axios
-  //     .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
-  //     .then((res) => {
-  //       res.data.forEach((item) => {
-  //         this.setState({
-  //           notes: [
-  //             ...this.state.notes,
-  //             {
-  //               body: item.body,
-  //               title: item.title,
-  //               createdAt: item.createdAt,
-  //               id: item.body.noteId,
-  //             },
-  //           ],
-  //         });
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
   hideLoading = () => {
     setTimeout(() => {
       this.setState({isLoading: false});
@@ -313,3 +291,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'azure',
   },
 });
+
+// componentDidMount() {
+//   axios
+//     .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
+//     .then((res) => {
+//       res.data.forEach((item) => {
+//         this.setState({
+//           notes: [
+//             ...this.state.notes,
+//             {
+//               body: item.body,
+//               title: item.title,
+//               createdAt: item.createdAt,
+//               id: item.body.noteId,
+//             },
+//           ],
+//         });
+//       });
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
