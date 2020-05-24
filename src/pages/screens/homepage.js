@@ -26,44 +26,44 @@ export default class HomePage extends Component {
     edit: false,
   };
 
-  componentDidMount() {
-    axios
-      .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
-      .then((res) => {
-        res.data.forEach((item) => {
-          this.setState({
-            notes: [
-              ...this.state.notes,
-              {
-                body: item.body,
-                title: item.title,
-                createdAt: item.createdAt,
-                id: item.body.noteId,
-              },
-            ],
-          });
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  // componentDidMount() {
+  //   axios
+  //     .get('https://us-central1-notes-537b3.cloudfunctions.net/api/getNote')
+  //     .then((res) => {
+  //       res.data.forEach((item) => {
+  //         this.setState({
+  //           notes: [
+  //             ...this.state.notes,
+  //             {
+  //               body: item.body,
+  //               title: item.title,
+  //               createdAt: item.createdAt,
+  //               id: item.body.noteId,
+  //             },
+  //           ],
+  //         });
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
   hideLoading = () => {
     setTimeout(() => {
       this.setState({isLoading: false});
     }, 5000);
   };
   handleAddNote = () => {
-    axios
-      .post('https://us-central1-notes-537b3.cloudfunctions.net/api/newNote', {
-        title: this.state.title,
-        body: this.state.body,
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
-    this.props.navigation.goBack();
+    // axios
+    //   .post('https://us-central1-notes-537b3.cloudfunctions.net/api/newNote', {
+    //     title: this.state.title,
+    //     body: this.state.body,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => console.log(err));
+    this.props.navigation.navigate('Notes');
   };
 
   render() {
@@ -108,7 +108,8 @@ export default class HomePage extends Component {
                 />
                 <Text style={styles.menu}>Menu</Text>
               </View>
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Add Note')}>
                 <PlusIcon name="pluscircle" size={70} color="#ff0bac" />
               </TouchableOpacity>
             </View>
