@@ -1,4 +1,4 @@
-import React, {Component, useState, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -8,15 +8,29 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {AuthContext} from '../../components/context/context';
+import axios from 'axios';
 
 const Login = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userEmail, setEmail] = useState('');
+  const [userPassword, setPassword] = useState('');
+  const [userToken, setUserToken] = useState(null);
   const [isLoadingIndicator, setIsLoading] = useState(false);
   const {signIn} = useContext(AuthContext);
-  function loginHandle(email, password) {
-    signIn(email, password);
-    // setIsLoading(true);
+  function loginHandle(email, password, myuserToken) {
+    // email, password, userToken
+    axios
+      .post('https://us-central1-notes-537b3.cloudfunctions.net/api/login', {
+        email: userEmail,
+        password: userPassword,
+      })
+      .then((res) => {
+        console.log(res.data.token);
+        setUserToken(res.data.token);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    signIn(email, password, myuserToken);
   }
 
   return (
@@ -27,7 +41,7 @@ const Login = ({navigation}) => {
         placeholder="Email"
         placeholderTextColor="#4b0082"
         clearButtonMode="unless-editing"
-        value={email}
+        value={userEmail}
         returnKeyType="next"
         keyboardType="email-address"
         onChangeText={(text) => setEmail(text)}
@@ -35,16 +49,18 @@ const Login = ({navigation}) => {
       <TextInput
         style={styles.textInput}
         placeholder="Password"
-        value={password}
+        value={userPassword}
         placeholderTextColor="#4b0082"
         clearButtonMode="unless-editing"
-        secureTextEntry={true}
+        secureTextEntry={false}
         onChangeText={(text) => setPassword(text)}
       />
-      <View style={{paddingTop: 20}}>
+      <View style={{paddingTop: 40}}>
         <TouchableOpacity
           style={styles.button}
-          onPress={loginHandle(email, password)}>
+          onPress={() => {
+            loginHandle(userEmail, userPassword, userToken);
+          }}>
           {isLoadingIndicator == 'hello' ? (
             <ActivityIndicator color="#fff" />
           ) : (

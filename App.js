@@ -42,6 +42,7 @@ const App = () => {
           email: action.id,
           userToken: action.token,
           isLoading: false,
+          password: action.password,
         };
       case 'SIGNUP': {
         return {
@@ -49,6 +50,7 @@ const App = () => {
           isLoading: false,
           userToken: action.token,
           email: action.id,
+          password: action.password,
         };
       }
       case 'LOGOUT':
@@ -57,6 +59,7 @@ const App = () => {
           isLoading: false,
           email: null,
           userToken: null,
+          password: null,
         };
     }
   };
@@ -65,45 +68,64 @@ const App = () => {
     loginReducer,
     initialLoginState,
   );
-  const authContext = React.useMemo(
-    () => ({
-      signIn: async (email, password) => {
-        // setUserToken('jdskjdkjkjd');
-        // setIsLoading(false);
-        let userToken;
-        userToken = null;
-        if (email == 'user@gmail.com' && password == '1234567') {
-          userToken = 'jnkjfkjkjlfkl';
-          try {
-            await AsyncStorage.setItem('userToken', userToken);
-          } catch (e) {
-            console.log(e);
-          }
-        }
-        dispatch({type: 'LOGIN', id: email, token: userToken});
-        {
-          console.log('user token is ' + userToken);
-          console.log('user email is ' + email);
-          console.log('user password is ' + password);
-        }
-      },
-      signOut: async () => {
-        // setUserToken(null);
-        // setIsLoading(false);
-        try {
-          await AsyncStorage.removeItem('userToken');
-        } catch (e) {
-          console.log(e);
-        }
-        dispatch({type: 'LOGOUT'});
-      },
-      signUp: () => {
-        setUserToken('said');
-        setIsLoading(false);
-      },
-    }),
-    [],
-  );
+  const authContext = React.useMemo(() => ({
+    signIn: async (email, password, userToken) => {
+      // setUserToken('jdskjdkjkjd');
+      // setIsLoading(false);
+      // let userToken;
+      // userToken = null;
+      // let userToken= userToken;
+      try {
+        await AsyncStorage.setItem('userToken', userToken);
+      } catch (e) {
+        console.log(e);
+      }
+
+      dispatch({
+        type: 'LOGIN',
+        id: email,
+        token: userToken,
+        password: password,
+      });
+      {
+        console.log('user token is ' + userToken);
+        console.log('user email is ' + email);
+        console.log('user password is ' + password);
+      }
+    },
+    signOut: async () => {
+      // setUserToken(null);
+      // setIsLoading(false);
+      try {
+        await AsyncStorage.removeItem('userToken');
+      } catch (e) {
+        console.log(e);
+      }
+      dispatch({type: 'LOGOUT'});
+    },
+
+    // with sign up we have to  pass the email, password and token to this function
+    // just like we did in signIn side. then we use async storage to store this data in the localStorage
+    signUp: async (email, password, userToken) => {
+      // let userToken = userToken
+      try {
+        await AsyncStorage.setItem('userToken', userToken);
+      } catch (e) {
+        console.log(e);
+      }
+      dispatch({
+        type: 'SIGNUP',
+        id: email,
+        token: userToken,
+        password: password,
+      });
+      {
+        console.log('user token is ' + userToken);
+        console.log('user email is ' + email);
+        console.log('user password is ' + password);
+      }
+    },
+  }));
   {
     console.log(loginState);
   }

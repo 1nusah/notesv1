@@ -5808,6 +5808,11 @@ react-native-paper@^3.9.0:
     color "^3.1.2"
     react-native-safe-area-view "^0.14.6"
 
+react-native-pure-jwt@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-pure-jwt/-/react-native-pure-jwt-2.2.1.tgz#fdc02b9d10b2f99a00ce344fc84eedd0b315df24"
+  integrity sha512-e4foOEiHLPEVH7KctYJ3R12i4icD5VJdVdDm7OnRNtQsgbAIHBYMDXqE/AqWH2kGtIEQruTQb67tmtNt2IRdfg==
+
 react-native-push@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-push/-/react-native-push-1.0.0.tgz#4a16a90984c8f83e7f32c3751714899399461fcf"
