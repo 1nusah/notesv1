@@ -82,11 +82,6 @@ const App = () => {
         token: userToken,
         password: password,
       });
-      {
-        console.log('user token is ' + userToken);
-        console.log('user email is ' + email);
-        console.log('user password is ' + password);
-      }
     },
     signOut: async () => {
       try {
@@ -112,16 +107,11 @@ const App = () => {
         token: userToken,
         password: password,
       });
-      {
-        console.log('user token is ' + userToken);
-        console.log('user email is ' + email);
-        console.log('user password is ' + password);
-      }
     },
   }));
-  {
-    console.log(loginState);
-  }
+  // {
+  //   console.log(loginState);
+  // }
   useEffect(() => {
     setTimeout(async () => {
       let userToken;

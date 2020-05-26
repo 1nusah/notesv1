@@ -12,21 +12,23 @@ const SignUp = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [myuserToken, setUserToken] = useState(null);
 
-  function handleCreateAccount() {
-    // axios
-    //   .post('https://us-central1-notes-537b3.cloudfunctions.net/api/register', {
-    //     email: email,
-    //     password: password,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => console.log(err));
-    signUp();
-    alert('fuck off');
+  const handleCreateAccount = (userEmail, userPassword, userToken) => {
+    axios
+      .post('https://us-central1-notes-537b3.cloudfunctions.net/api/register', {
+        email: email,
+        password: password,
+        confirmpassword: confirmPassword,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setUserToken(res.data.token);
+      })
+      .catch((err) => console.log(err));
+    signUp(userEmail, userPassword, userToken);
     // navigation.navigate('Notes');
-  }
+  };
   const {signUp} = React.useContext(AuthContext);
 
   return (
@@ -61,7 +63,7 @@ const SignUp = ({navigation}) => {
       <View style={{paddingTop: 20}}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => handleCreateAccount()}>
+          onPress={() => handleCreateAccount(email, password, myuserToken)}>
           <Text style={styles.buttonText}>Proceed</Text>
         </TouchableOpacity>
       </View>
