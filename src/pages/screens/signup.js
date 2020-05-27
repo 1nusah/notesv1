@@ -16,7 +16,7 @@ const SignUp = ({navigation}) => {
 
   const handleCreateAccount = (userEmail, userPassword, userToken) => {
     axios
-      .post('https://us-central1-notes-537b3.cloudfunctions.net/api/register', {
+      .post('https://us-central1-notes-537b3.cloudfunctions.net/api/signup', {
         email: email,
         password: password,
         confirmpassword: confirmPassword,
@@ -24,6 +24,8 @@ const SignUp = ({navigation}) => {
       .then((res) => {
         console.log(res.data);
         setUserToken(res.data.token);
+        // const HeaderThings = `Bearer ${res.data.token}`;
+        // axios.defaults.headers['Authorization'] = HeaderThings;
       })
       .catch((err) => console.log(err));
     signUp(userEmail, userPassword, userToken);

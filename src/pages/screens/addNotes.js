@@ -13,31 +13,38 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import axios from 'axios';
 const {width, height} = Dimensions.get('window');
+
 const AddNotes = ({navigation}) => {
-  const [yourTitle, setNoteTitle] = React.useEffect('');
-  const [yourBody, setNoteBody] = React.useEffect('');
-  const [yourToken, setYourToken] = React.useEffect('');
+  const [yourTitle, setNoteTitle] = React.useState('');
+  const [yourBody, setNoteBody] = React.useState('');
+  const [yourToken, setYourToken] = React.useState('');
+
   const handleAddNote = async () => {
     try {
       const value = await AsyncStorage.getItem('userToken');
-      if (value !== null) {
-        setYourToken(value);
-      }
+      console.log(value);
+      setYourToken(value);
     } catch (e) {
       // error reading value
       console.log(e);
     }
-
     const AuthStr = 'Bearer '.concat(yourToken);
 
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + yourToken,
+      },
+    };
+
     axios
-      .post('https://us-central1-notes-537b3.cloudfunctions.net/api/newNote', [
+      .post(
+        'https://us-central1-notes-537b3.cloudfunctions.net/api/newNote',
         {
           title: yourTitle,
           body: yourBody,
         },
-        {headers: {Authorization: AuthStr}},
-      ])
+        config,
+      )
       .then((res) => {
         console.log(res);
       })
@@ -112,27 +119,3 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
 });
-
-//  notes: {
-//         title: '',
-//         notes: '',
-//       },
-//   this.state = {
-//    someProperty: {
-//       flag:true
-//    }
-// }
-//this.setState({ someProperty: { ...this.state.someProperty, flag: false} });
-
-// handleAddNote = () => {
-//   axios
-//     .post('https://us-central1-notes-537b3.cloudfunctions.net/api/newNote', {
-//       title: this.state.title,
-//       body: this.state.body,
-//     })
-//     .then((res) => {
-//       console.log(res.data);
-//     })
-//     .catch((err) => console.log(err));
-//   this.props.navigation.goBack();
-// };
