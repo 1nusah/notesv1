@@ -28,14 +28,13 @@ const AddNotes = ({navigation}) => {
       // error reading value
       console.log(e);
     }
-    const AuthStr = 'Bearer '.concat(yourToken);
+    axios.defaults.headers.common['Authorization'] = ` Bearer ${yourToken}`;
 
     const config = {
       headers: {
-        Authorization: 'Bearer ' + yourToken,
+        Authorization: `Bearer ${yourToken}`,
       },
     };
-
     axios
       .post(
         'https://us-central1-notes-537b3.cloudfunctions.net/api/newNote',
