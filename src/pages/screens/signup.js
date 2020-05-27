@@ -24,8 +24,7 @@ const SignUp = ({navigation}) => {
       .then((res) => {
         console.log(res.data);
         setUserToken(res.data.token);
-        // const HeaderThings = `Bearer ${res.data.token}`;
-        // axios.defaults.headers['Authorization'] = HeaderThings;
+        
       })
       .catch((err) => console.log(err));
     signUp(userEmail, userPassword, userToken);

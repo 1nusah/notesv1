@@ -116,7 +116,7 @@ const App = () => {
       let userToken;
       userToken = null;
       try {
-        userToken = await AsyncStorage.getItem('userToken', userToken);
+        userToken = await AsyncStorage.getItem('userToken');
       } catch (e) {
         console.log(e);
       }
