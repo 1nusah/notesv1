@@ -28,7 +28,7 @@ const AddNotes = ({navigation}) => {
       // error reading value
       console.log(e);
     }
-    axios.defaults.headers.common['Authorization'] = ` Bearer ${yourToken}`;
+    // axios.defaults.headers.common['Authorization'] = ` Bearer ${yourToken}`;
 
     const config = {
       headers: {
