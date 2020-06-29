@@ -8,13 +8,19 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import {AuthContext} from '../../components/context/context';
+import {ActivityIndicator} from 'react-native-paper';
 const SignUp = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [myuserToken, setUserToken] = useState(null);
+  const [isLoadingIndicator, setIsLoading] = useState(false);
 
-  const handleCreateAccount = (userEmail, userPassword, userToken) => {
+  const {signUp} = React.useContext(AuthContext);
+  // sign up page
+
+  // so here the user details are sent to the devices storage
+  function handleCreateAccount(userEmail, userPassword, userToken) {
     axios
       .post('https://us-central1-notes-537b3.cloudfunctions.net/api/signup', {
         email: email,
@@ -22,15 +28,16 @@ const SignUp = ({navigation}) => {
         confirmpassword: confirmPassword,
       })
       .then((res) => {
-        console.log(res.data);
-        setUserToken(res.data.token);
-        
+        // console.log(res.data.token);
+        setUserToken(res.data.token.toString());
       })
       .catch((err) => console.log(err));
     signUp(userEmail, userPassword, userToken);
-    // navigation.navigate('Notes');
-  };
-  const {signUp} = React.useContext(AuthContext);
+    setIsLoading(true);
+    setInterval(() => {
+      setIsLoading(false);
+    }, 5000);
+  }
 
   return (
     <View style={styles.container}>
@@ -63,9 +70,14 @@ const SignUp = ({navigation}) => {
       />
       <View style={{paddingTop: 20}}>
         <TouchableOpacity
+          disabled={isLoadingIndicator}
           style={styles.button}
           onPress={() => handleCreateAccount(email, password, myuserToken)}>
-          <Text style={styles.buttonText}>Proceed</Text>
+          {isLoadingIndicator == true ? (
+            <ActivityIndicator color="#fff" size="small" />
+          ) : (
+            <Text style={styles.buttonText}>Proceed</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>

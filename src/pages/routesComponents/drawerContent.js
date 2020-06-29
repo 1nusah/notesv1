@@ -4,7 +4,7 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Title, Drawer, Text, TouchableRipple, Switch} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AuthContext} from '../../components/context/context';
-
+// drawer content
 export default function DrawerContent(props) {
   const {signOut} = React.useContext(AuthContext);
 
@@ -16,6 +16,7 @@ export default function DrawerContent(props) {
   const handleSignOut = () => {
     signOut();
   };
+  // the various drawer items and components are here
 
   return (
     <View style={{flex: 1}} {...props}>

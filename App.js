@@ -27,6 +27,10 @@ const App = () => {
     email: null,
     userToken: null,
   };
+
+  // this section deals with storing user token and all to the device storage
+
+  // this immediate funciton looks at the itemss that need to be stored and the  how these variables or objects are going to change
   const loginReducer = (prevState, action) => {
     switch (action.type) {
       case 'RETRIEVE_TOKEN':
@@ -62,11 +66,15 @@ const App = () => {
         };
     }
   };
+  // here we use redux reducers
 
   const [loginState, dispatch] = React.useReducer(
     loginReducer,
     initialLoginState,
   );
+
+  // we use the context api here
+  // so the dispatch type then stores variables to the localstorage
   const authContext = React.useMemo(() => ({
     signIn: async (email, password, userToken) => {
       try {
@@ -93,7 +101,7 @@ const App = () => {
 
     // with sign up we have to  pass the email, password and token to this function
     // just like we did in signIn side. then we use async storage to store this data in the localStorage
-    signUp: async (email, password, userToken) => {
+    signUp: async (userEmail, userPassword, userToken) => {
       // let userToken = userToken
       try {
         await AsyncStorage.setItem('userToken', userToken);
@@ -102,15 +110,14 @@ const App = () => {
       }
       dispatch({
         type: 'SIGNUP',
-        id: email,
+        id: userEmail,
         token: userToken,
-        password: password,
+        password: userPassword,
       });
     },
   }));
-  // {
-  //   console.log(loginState);
-  // }
+  // useEffect is used to call a function when the component or screen loads
+  // in this function, AsyncStoreage dependency tries to get the stored token
   useEffect(() => {
     setTimeout(async () => {
       let userToken;
@@ -126,6 +133,7 @@ const App = () => {
       });
     }, 1000);
   }, []);
+  //while we are trying to get the token from the storage, we then load our splash screen
   if (loginState.isLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -134,6 +142,9 @@ const App = () => {
     );
   }
 
+  // this is the navigation function or component
+  // if there is no token then we take you to the sign up and login pages
+  // with the help of the tenary operator we know what to do
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
@@ -141,6 +152,7 @@ const App = () => {
         {loginState.userToken == null ? (
           <RegisterStack />
         ) : (
+          // if there is a token then this navigation comes through
           <Drawer.Navigator
             drawerContent={(props) => <DrawerContent {...props} />}>
             <Drawer.Screen

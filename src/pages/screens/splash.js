@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Modal} from 'react-native';
 import * as Animatable from 'react-native-animatable';
+// our splash screen
 function Splash({navigation}) {
   return (
     <Modal>

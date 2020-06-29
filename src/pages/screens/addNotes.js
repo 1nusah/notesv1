@@ -14,11 +14,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 const {width, height} = Dimensions.get('window');
 
+// this component simply helps send the notes item to firebase with axios
 const AddNotes = ({navigation}) => {
   const [yourTitle, setNoteTitle] = React.useState('');
   const [yourBody, setNoteBody] = React.useState('');
   const [yourToken, setYourToken] = React.useState('');
-
+  // funtion to handle posting note item
   const handleAddNote = async () => {
     try {
       const value = await AsyncStorage.getItem('userToken');
@@ -51,6 +52,7 @@ const AddNotes = ({navigation}) => {
         console.error(e);
       });
   };
+  // this shows the screen with the components
   return (
     <View style={styles.container}>
       <TextInput
@@ -96,6 +98,7 @@ const AddNotes = ({navigation}) => {
 };
 
 export default AddNotes;
+// stylling of th page
 const styles = StyleSheet.create({
   container: {
     flex: 1,

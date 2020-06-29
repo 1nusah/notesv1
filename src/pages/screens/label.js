@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+// this page is for creatinf labels to be updated in our beta version
 class Label extends Component {
   render() {
     return (

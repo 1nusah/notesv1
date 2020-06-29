@@ -5,8 +5,9 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
+import {ActivityIndicator} from 'react-native-paper';
+
 import {AuthContext} from '../../components/context/context';
 import axios from 'axios';
 
@@ -18,21 +19,26 @@ const Login = ({navigation}) => {
   const {signIn} = useContext(AuthContext);
   function loginHandle(email, password, myuserToken) {
     // email, password, userToken
+    // handle login function which passes the userlogin details and usertoken to the devices storeage
     axios
       .post('https://us-central1-notes-537b3.cloudfunctions.net/api/login', {
         email: userEmail,
         password: userPassword,
       })
       .then((res) => {
-        console.log(res.data.token);
+        // console.log(res.data.token);
         setUserToken(res.data.token);
       })
       .catch((e) => {
         console.log(e);
       });
     signIn(email, password, myuserToken);
+    setIsLoading(true);
+    setInterval(() => {
+      setIsLoading(false);
+    }, 5000);
   }
-
+  // this is the login page
   return (
     <View style={styles.container}>
       <Text style={styles.login}>Login</Text>
@@ -52,17 +58,19 @@ const Login = ({navigation}) => {
         value={userPassword}
         placeholderTextColor="#4b0082"
         clearButtonMode="unless-editing"
-        secureTextEntry={false}
+        secureTextEntry={true}
         onChangeText={(text) => setPassword(text)}
       />
       <View style={{paddingTop: 40}}>
         <TouchableOpacity
+          disabled={isLoadingIndicator}
           style={styles.button}
           onPress={() => {
+            // if you press login the handle function is triggered
             loginHandle(userEmail, userPassword, userToken);
           }}>
-          {isLoadingIndicator == 'hello' ? (
-            <ActivityIndicator color="#fff" />
+          {isLoadingIndicator == true ? (
+            <ActivityIndicator color="#fff" size="small" />
           ) : (
             <Text style={styles.buttonText}>Proceed</Text>
           )}
@@ -72,7 +80,7 @@ const Login = ({navigation}) => {
       <View style={{paddingTop: 10}}>
         <TouchableOpacity
           onPress={() => {
-            setIsLoading(true);
+            // setIsLoading(true);
             navigation.navigate('Sign Up');
           }}>
           <Text style={styles.signup}> Don't have an account? Sign Up</Text>

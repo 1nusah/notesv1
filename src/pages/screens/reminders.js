@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// thsi is the reminders page to be updated in our later version
 class Reminders extends Component {
   render() {
     return (
